@@ -60,9 +60,9 @@ class ibkr_app(EWrapper, EClient):
         # Take a look at candlestick_plot.ipynb for some help!
         # assign the dataframe to self.historical_data.
         # print(reqId, bar)
-        fill_row = pd.DataFrame({'date': [bar.date], 'open': [bar.open], 'high': [bar.high],
+        data = pd.DataFrame({'date': [bar.date], 'open': [bar.open], 'high': [bar.high],
                                  'low': [bar.low], 'close': [bar.close]})
-        self.historical_data = pd.concat([self.historical_data, fill_row], ignore_index=True)
+        self.historical_data = pd.concat([self.historical_data, data], ignore_index=True)
 
     def historicalDataEnd(self, reqId: int, start: str, end: str):
         # super().historicalDataEnd(reqId, start, end)
@@ -81,7 +81,7 @@ while isinstance(app.next_valid_id, type(None)):
     time.sleep(0.01)
 
 
-value = "GBP.USD" # This is what your text input looks like on your app
+value = "AUD.CAD" # This is what your text input looks like on your app
 
 # Create a contract object
 contract = Contract()
@@ -91,14 +91,14 @@ contract.exchange = 'IDEALPRO'  # 'IDEALPRO' is the currency exchange.
 contract.currency = value.split(".")[1]
 
 tickerId = app.next_valid_id
-    app.reqHistoricalData(
+     app.reqHistoricalData(
         tickerId, contract,   endDateTime='',
         durationStr='30 D',       # <-- make a reactive input
         barSizeSetting='1 hour',  # <-- make a reactive input
         whatToShow='MIDPOINT',
         useRTH=True,               # <-- make a reactive input
         formatDate = 1, keepUpToDate = False, chartOptions = []
-    )
+     )
     while app.historical_data_end != tickerId:
         time.sleep(0.01)
 

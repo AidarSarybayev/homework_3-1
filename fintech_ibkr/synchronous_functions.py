@@ -53,9 +53,9 @@ class ibkr_app(EWrapper, EClient):
         # Take a look at candlestick_plot.ipynb for some help!
         # assign the dataframe to self.historical_data.
         # print(reqId, bar)
-        fill_row = pd.DataFrame({'date': [bar.date], 'open': [bar.open], 'high': [bar.high],
+        data = pd.DataFrame({'date': [bar.date], 'open': [bar.open], 'high': [bar.high],
                                  'low': [bar.low], 'close': [bar.close] })
-        self.historical_data = pd.concat([self.historical_data, fill_row], ignore_index=True)
+        self.historical_data = pd.concat([self.historical_data, data], ignore_index=True)
 
     def historicalDataEnd(self, reqId: int, start: str, end: str):
         # super().historicalDataEnd(reqId, start, end)
