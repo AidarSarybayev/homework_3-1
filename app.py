@@ -126,7 +126,7 @@ app.layout = html.Div([
     html.Div(
         # The input object itself
         ["Input Currency: ", dcc.Input(
-            id='currency-input', value='AUD.CAD', type='text'
+            id='currency-input', value='GBP.USD', type='text'
         )],
         # Style it so that the submit button appears beside the input.
         style={'display': 'inline-block', 'padding-top': '5px'}
@@ -155,7 +155,7 @@ app.layout = html.Div([
         value='BUY'
     ),
     # Text input for the currency pair to be traded
-    dcc.Input(id='trade-currency', value='AUDCAD', type='text'),
+    dcc.Input(id='trade-currency', value='GBPUSD', type='text'),
     # Numeric input for the trade amount
     dcc.Input(id='trade-amt', value='20000', type='number'),
     # Submit button for the trade

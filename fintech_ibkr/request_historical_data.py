@@ -4,7 +4,7 @@
 #  ready to be loaded into the candlestick graph constructor.
 
 from ibapi.contract import Contract
-#from fintech_ibkr import *
+from fintech_ibkr import *
 
 import pandas as pd
 from ibapi.client import EClient
@@ -81,7 +81,7 @@ while isinstance(app.next_valid_id, type(None)):
     time.sleep(0.01)
 
 
-value = "EUR.USD" # This is what your text input looks like on your app
+value = "GBP.USD" # This is what your text input looks like on your app
 
 # Create a contract object
 contract = Contract()
@@ -105,6 +105,7 @@ tickerId = app.next_valid_id
 app.disconnect()
 
 app.historical_data
+
 # Get your historical data
 #historical_data = fetch_historical_data(contract)
 
