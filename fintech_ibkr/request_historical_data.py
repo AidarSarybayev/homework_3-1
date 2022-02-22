@@ -81,7 +81,7 @@ while isinstance(app.next_valid_id, type(None)):
     time.sleep(0.01)
 
 
-value = "AUD.CAD" # This is what your text input looks like on your app
+value = "GBP.USD" # This is what your text input looks like on your app
 
 # Create a contract object
 contract = Contract()
