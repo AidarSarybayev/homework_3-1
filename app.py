@@ -184,7 +184,7 @@ app.layout = html.Div([
 )
 def update_candlestick_graph(n_clicks, currency_string, what_to_show,
                              edt_date, edt_hour, edt_minute, edt_second, user_RTH, bar_size, duration_str):
-    print(currency_string)
+    # print(currency_string)
     # n_clicks doesn't
     # get used, we only include it for the dependency.
     # print(what_to_show)
