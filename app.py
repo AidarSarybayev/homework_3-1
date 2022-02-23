@@ -5,7 +5,7 @@ from dash import html
 from dash.dependencies import Input, Output, State
 from ibapi.contract import Contract
 from fintech_ibkr import *
-import pandas as pd
+#import pandas as pd
 
 # Make a Dash app!
 app = dash.Dash(__name__)
