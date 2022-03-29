@@ -1,11 +1,15 @@
 import dash
 import plotly.graph_objects as go
+import dash_bootstrap_components as dbc
+from dash import Input, Output, html
+import html as html
+import time
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output, State
 from ibapi.contract import Contract
 from fintech_ibkr import *
-#import pandas as pd
+import pandas as pd
 
 # Make a Dash app!
 app = dash.Dash(__name__)
@@ -113,32 +117,99 @@ app.layout = html.Div([
     ),
 
     html.H4("Enter a currency pair:"),
-    html.P(
-        children=[
-            "See the various currency pairs here: ",
-            html.A(
-                "currency pairs",
-                href='https://www.interactivebrokers.com/en/index.php?f=2222&exch=ibfxpro&showcategories=FX'
-            )
-        ]
-    ),
+    # html.P(
+    #     children=[
+    #         "See the various currency pairs here: ",
+    #         html.A(
+    #             "currency pairs",
+    #             href='https://www.interactivebrokers.com/en/index.php?f=2222&exch=ibfxpro&showcategories=FX'
+    #         )
+    #     ]
+    # ),
+
     # Currency pair text input, within its own div.
+    # html.Div(
+    #     # The input object itself
+    #     ["Input Currency: ", dcc.Input(
+    #         id='currency-input', value='GBP.USD', type='text'
+    #     )],
+    #     # Style it so that the submit button appears beside the input.
+    #     style={'display': 'inline-block', 'padding-top': '5px'}
+    # ),
+
+    # Another way to represent the currency pair, as a Dropdown menu.
     html.Div(
         # The input object itself
-        ["Input Currency: ", dcc.Input(
-            id='currency-input', value='GBP.USD', type='text'
-        )],
+        dcc.Dropdown(
+            [ 'AED.USD', 'AUD.CAD', 'AUD.CHF', 'AUD.CNH', 'AUD.HKD', 'AUD.JPY',
+              'AUD.NZD', 'AUD.SGD', 'AUD.USD', 'AUD.ZAR', 'CAD.CHF', 'CAD.CNH',
+              'CAD.JPY', 'CHF.CNH', 'CHF.CZK', 'CHF.DKK', 'CHF.HUF', 'CHF.JPY',
+              'CHF.NOK', 'CHF.PLN', 'CHF.SEK', 'CHF.TRY', 'CHF.ZAR', 'CNH.HKD',
+              'CNH.JPY', 'DKK.JPY', 'DKK.NOK', 'DKK.SEK', 'EUR.AUD', 'EUR.CAD',
+              'EUR.CHF', 'EUR.CNH', 'EUR.CZK', 'EUR.DKK', 'EUR.GBP', 'EUR.HKD',
+              'EUR.HUF', 'EUR.ILS', 'EUR.JPY', 'EUR.MXN', 'EUR.NOK', 'EUR.NZD',
+              'EUR.PLN', 'EUR.RUB', 'EUR.SEK', 'EUR.SGD', 'EUR.TRY', 'EUR.USD',
+              'EUR.ZAR', 'GBP.AUD', 'GBP.CAD', 'GBP.CHF', 'GBP.CNH', 'GBP.CZK',
+              'GBP.DKK', 'GBP.HKD', 'GBP.HUF', 'GBP.JPY', 'GBP.MXN', 'GBP.NOK',
+              'GBP.NZD', 'GBP.PLN', 'GBP.SEK', 'GBP.SGD', 'GBP.TRY', 'GBP.USD',
+              'GBP.ZAR', 'HKD.JPY', 'KRW.AUD', 'KRW.CAD', 'KRW.CHF', 'KRW.EUR',
+              'KRW.GBP', 'KRW.HKD', 'KRW.JPY', 'KRW.USD', 'MXN.JPY', 'NOK.JPY',
+              'NOK.SEK', 'NZD.CAD', 'NZD.CHF', 'NZD.JPY', 'NZD.USD', 'SAR.USD',
+              'SEK.JPY', 'SGD.CNH', 'SGD.HKD', 'SGD.JPY', 'USD.AED', 'USD.CAD',
+              'USD.CHF', 'USD.CNH', 'USD.CZK', 'USD.DKK', 'USD.HKD', 'USD.HUF',
+              'USD.ILS', 'USD.JPY', 'USD.KRW', 'USD.MXN', 'USD.NOK', 'USD.PLN',
+              'USD.RUB', 'USD.SAR', 'USD.SEK', 'USD.SGD', 'USD.TRY', 'USD.ZAR', 'ZAR.JPY'],
+                "GBP.USD",
+                id='currency-input'
+            ),
+                style={'width': '150px'},
         # Style it so that the submit button appears beside the input.
-        style={'display': 'inline-block', 'padding-top': '5px'}
+#        style={'display': 'inline-block', 'padding-top': '10px'}
     ),
+
+    # html.Div(
+    #     dcc.Dropdown(
+    #         ["TRADES", "MIDPOINT", "BID", "ASK", "BID_ASK", "ADJUSTED_LAST",
+    #          "HISTORICAL_VOLATILITY", "OPTION_IMPLIED_VOLATILITY", 'REBATE_RATE',
+    #          'FEE_RATE', "YIELD_BID", "YIELD_ASK", 'YIELD_BID_ASK', 'YIELD_LAST',
+    #          "SCHEDULE"],
+    #         "MIDPOINT",
+    #         id='what-to-show'
+    #     ),
+    #     style={'width': '365px'}
+    # ),
+
+    # Line break
+    html.Br(),
+
     # Submit button
-    html.Button('Submit', id='submit-button', n_clicks=0),
+  html.Button('Submit', id='submit-button', n_clicks=0),
+
+    # # TRYING TO IMPLEMENT A SPINNER
+    # html.Div(
+    #     [
+    #     dbc.Button(
+    #         [dbc.Spinner(size="sm"), "Submit"],
+    #         color='primary',
+    #         disabled=False,
+    #         id='submit-button',
+    #         n_clicks=0,
+    #     ),
+    #     ],
+    # ),
+
     # Line break
     html.Br(),
     # Div to hold the initial instructions and the updated info once submit is pressed
     html.Div(id='currency-output', children='Enter a currency code and press submit'),
     # Div to hold the candlestick graph
-    html.Div([dcc.Graph(id='candlestick-graph')]),
+    # html.Div(dbc.Spinner([dcc.Graph(id='candlestick-graph')],
+    #                      color="secondary",
+    #                      type="grow"),
+    #          ),
+    dbc.Row(dbc.Col(dbc.Spinner([dcc.Graph(id='candlestick-graph')],color="primary",size=100,fullscreen=False))),
+
+
     # Another line break
     html.Br(),
     # Section title
@@ -185,9 +256,9 @@ app.layout = html.Div([
 def update_candlestick_graph(n_clicks, currency_string, what_to_show,
                              edt_date, edt_hour, edt_minute, edt_second, user_RTH, bar_size, duration_str):
     # print(currency_string)
+    time.sleep(3)
     # n_clicks doesn't
     # get used, we only include it for the dependency.
-    # print(what_to_show)
     if any([i is None for i in [edt_date, edt_hour, edt_minute, edt_second]]):
         endDateTime = ''
     else:
@@ -265,6 +336,8 @@ def update_candlestick_graph(n_clicks, currency_string, what_to_show,
 
     # Return your updated text to currency-output, and the figure to candlestick-graph outputs
     return ('Submitted query for ' + currency_string), fig
+
+
 
 # Callback for what to do when trade-button is pressed
 @app.callback(
